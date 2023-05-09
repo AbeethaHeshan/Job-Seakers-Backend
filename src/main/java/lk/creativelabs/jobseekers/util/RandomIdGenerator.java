@@ -15,6 +15,6 @@ public class RandomIdGenerator implements IdentifierGenerator {
             int randomIndex = (int) (Math.random() * randomChars.length());
             sb.append(randomChars.charAt(randomIndex));
         }
-        return "U" + sb;
+        return sb;
     }
 }
