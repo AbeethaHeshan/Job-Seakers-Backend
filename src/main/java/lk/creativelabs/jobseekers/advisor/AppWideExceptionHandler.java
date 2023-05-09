@@ -4,19 +4,19 @@ package lk.creativelabs.jobseekers.advisor;
 
 import lk.creativelabs.jobseekers.util.ResponseUtil;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.sql.SQLException;
+
+@RestControllerAdvice
 @CrossOrigin
 public class AppWideExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({Exception.class})
+    @ExceptionHandler({Exception.class, SQLException.class})
     public ResponseUtil exceptionHandler(Exception e) {
-        return new ResponseUtil(500, e.getMessage(), null);
+        return new ResponseUtil(500, e.getMessage(),null);
     }
 
 
