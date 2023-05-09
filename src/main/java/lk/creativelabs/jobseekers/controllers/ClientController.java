@@ -26,10 +26,7 @@ public class ClientController {
         }else{
             return new ResponseUtil(400,"user role is not valid",null);
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/main
     }
 
     @PostMapping(value = "/getAll",consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -37,10 +34,7 @@ public class ClientController {
 
     }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/main
     @PostMapping(value = "/update",consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
     public void update(){
 
@@ -52,8 +46,4 @@ public class ClientController {
     }
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
 }
