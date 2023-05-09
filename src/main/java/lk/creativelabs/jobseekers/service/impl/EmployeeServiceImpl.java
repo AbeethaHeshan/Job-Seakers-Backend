@@ -1,6 +1,7 @@
 package lk.creativelabs.jobseekers.service.impl;
 
 import lk.creativelabs.jobseekers.dto.EmployeeDTO;
+import lk.creativelabs.jobseekers.dto.UserCredentialsDTO;
 import lk.creativelabs.jobseekers.entity.Employee;
 import lk.creativelabs.jobseekers.entity.UserCredentials;
 import lk.creativelabs.jobseekers.repo.EmployeeRepo;
@@ -54,7 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public String Login(LoginDTO loginDetails) {
+    public String Login(UserCredentialsDTO loginDetails) {
         return null;
     }
 
