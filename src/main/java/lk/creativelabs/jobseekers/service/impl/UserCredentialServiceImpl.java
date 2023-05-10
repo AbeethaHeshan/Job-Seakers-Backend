@@ -3,14 +3,15 @@ package lk.creativelabs.jobseekers.service.impl;
 import lk.creativelabs.jobseekers.dto.UserCredentialsDTO;
 import lk.creativelabs.jobseekers.entity.UserCredentials;
 import lk.creativelabs.jobseekers.repo.UserCredentialsRepo;
+import lk.creativelabs.jobseekers.security.util.CustomUser;
 import lk.creativelabs.jobseekers.service.UserCredentialService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,13 +29,11 @@ public class UserCredentialServiceImpl implements UserCredentialService , UserDe
       ModelMapper mapper;
 
 
-
       @Override
       public UserCredentialsDTO getUserDetails(String username , String password) {
 
             return  mapper.map(userCredentials.findAllByUsernameAndPassword(username,password), UserCredentialsDTO.class);
       }
-
 
       @Override
       public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,6 +45,14 @@ public class UserCredentialServiceImpl implements UserCredentialService , UserDe
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
             // we can use for more authorities using for each
             authorities.add(new SimpleGrantedAuthority(user.getRole()));
-            return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),authorities);
+            return new CustomUser(user.getUsername(),user.getPassword(),authorities,user.getUserId(),user.getRole());
       }
+
+      @Override
+      public UserCredentialsDTO getUser(String userId) {
+
+            UserCredentials byUsername = userCredentials.findByUserId(userId);
+            return new UserCredentialsDTO(byUsername.getUsername(),byUsername.getUserId(),byUsername.getRole());
+      }
+
 }

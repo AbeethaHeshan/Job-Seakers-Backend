@@ -15,8 +15,8 @@ public class AppWideExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({Exception.class, SQLException.class})
-    public ResponseUtil exceptionHandler(Exception e) {
-        return new ResponseUtil(500, e.getMessage(),null);
+    public ResponseUtil exceptionHandler(Exception e,SQLException exception) {
+        return new ResponseUtil(500, e.getMessage(),exception.getMessage());
     }
 
 

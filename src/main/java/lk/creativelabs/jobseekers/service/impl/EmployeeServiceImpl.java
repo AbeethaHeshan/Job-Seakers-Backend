@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Transactional
@@ -70,7 +71,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDTO getEmployee(String employeeId) {
-        return null;
+    public EmployeeDTO getEmployee(String userId,String role) throws Exception {
+        try{
+            Employee employee = employeeRepo.getEmployeeByUserIdAndRole(userId, role);
+            EmployeeDTO employeeDTO =  new EmployeeDTO(employee.getName(),employee.getAddress(),employee.getDateOfBirth(),employee.getEmail(),employee.getTel(),employee.getProfileImageUri(),employee.getWorkingType(),employee.getJobType());
+            return employeeDTO;
+        }catch (Exception exception){
+            throw new Exception(exception);
+        }
+
     }
 }

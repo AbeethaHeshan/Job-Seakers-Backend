@@ -12,6 +12,7 @@ public interface EmployeeRepo extends JpaRepository<Employee,String> {
     // update employee
     // delete employee
 
+      Employee getEmployeeByUserIdAndRole(String userId,String role);
 
 
 

@@ -29,4 +29,9 @@ public class UserCredentialsDTO {
      }
 
 
+     public UserCredentialsDTO(String username, String userId, String role) {
+          this.username = username;
+          this.role = role;
+          this.userId = userId;
+     }
 }
