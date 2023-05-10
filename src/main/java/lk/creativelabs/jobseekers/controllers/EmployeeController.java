@@ -14,6 +14,7 @@ import javax.annotation.security.RolesAllowed;
 
 @RestController
 @RequestMapping("employee")
+@CrossOrigin
 public class EmployeeController {
 
     @Autowired

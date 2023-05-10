@@ -10,6 +10,7 @@ import lk.creativelabs.jobseekers.service.EmployeeService;
 import lk.creativelabs.jobseekers.util.UserIdGenerator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,6 +30,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     UserCredentialsRepo authRepo;
 
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+
     @Override
     public EmployeeDTO createNewEmployee(EmployeeDTO employeeDetails) {
         try{
@@ -36,7 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             Employee employee = mapper.map(employeeDetails, Employee.class);
             employee.setUserId(userId);
             employeeRepo.save(employee);
-            authRepo.save(new UserCredentials(employeeDetails.getUserName(),employeeDetails.getPassword(),userId,employeeDetails.getRole()));
+            authRepo.save(new UserCredentials(employeeDetails.getUserName(), passwordEncoder.encode(employeeDetails.getPassword()),userId,employeeDetails.getRole()));
            return new EmployeeDTO(employeeDetails.getName(),employeeDetails.getAddress(),employeeDetails.getDateOfBirth(),employeeDetails.getEmail(),employeeDetails.getTel(),employeeDetails.getProfileImageUri(),employeeDetails.getWorkingType(),employeeDetails.getJobType())  ;
 
         }catch (Error error){
