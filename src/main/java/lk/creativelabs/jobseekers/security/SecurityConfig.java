@@ -42,14 +42,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CustomAuthonticationFilter customAuthonticationFilter = new CustomAuthonticationFilter(authenticationManagerBean());
         customAuthonticationFilter.setFilterProcessesUrl("/login");
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("api/v1/login/**","/auth/token/refresh/**").permitAll();
+        http.authorizeRequests().antMatchers("/login/**","/auth/token/refresh/**").permitAll();
         http.authorizeRequests().antMatchers(POST,"/employee/getemployee/**").authenticated();
-        http.authorizeRequests().antMatchers(POST,"/employee/createNew/**").permitAll();
+        http.authorizeRequests().antMatchers(POST,"/employee/createNew").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthonticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
-
 
     @Bean
     @Override

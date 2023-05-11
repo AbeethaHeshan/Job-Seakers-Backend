@@ -85,7 +85,7 @@ public class CustomAuthonticationFilter extends UsernamePasswordAuthenticationFi
 
         String refresh_token = JWT.create()
                 .withSubject(user.getUserId())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ 30 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis()+ 20 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
@@ -97,7 +97,15 @@ public class CustomAuthonticationFilter extends UsernamePasswordAuthenticationFi
 
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(),tokens);
+
     }
 
-
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        Map<String,String> tokens = new HashMap<>();
+        tokens.put("code","403");
+        tokens.put("message","not a valid user");
+        response.setContentType(APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getOutputStream(),tokens);
+    }
 }

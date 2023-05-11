@@ -37,7 +37,9 @@ public class UserCredentialServiceImpl implements UserCredentialService , UserDe
 
       @Override
       public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+            System.out.println("loadUserByUsername in service usercredientialserviceIMPL");
             UserCredentials user = userCredentials.findByUsername(username);
+            System.out.println(user + " " + " cccc ");
             if(user == null){
                   System.out.println("User not found");
                   throw new UsernameNotFoundException(" This User not found");
@@ -50,7 +52,7 @@ public class UserCredentialServiceImpl implements UserCredentialService , UserDe
 
       @Override
       public UserCredentialsDTO getUser(String userId) {
-
+            System.out.println("getUser() in service usercredientialserviceIMPL");
             UserCredentials byUsername = userCredentials.findByUserId(userId);
             return new UserCredentialsDTO(byUsername.getUsername(),byUsername.getUserId(),byUsername.getRole());
       }
