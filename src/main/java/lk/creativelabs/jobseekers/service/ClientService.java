@@ -13,6 +13,6 @@ public interface ClientService {
     boolean deleteClient(String clientId);
     String Login(UserCredentialsDTO loginDetails);
     ArrayList<EmployeeDTO> getAllClients();
-    EmployeeDTO getClient(String clientId);
+    Object getClient(String userId, String role) throws Exception;
 
 }

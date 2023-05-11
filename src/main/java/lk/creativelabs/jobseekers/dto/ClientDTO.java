@@ -48,7 +48,20 @@ public class ClientDTO {
     }
 
 
-    public ClientDTO(String owner, String businessName, String businessType, Address address, String businessRegistrationDocUri, String businessRegistrationNo, String email, String tel, String profileImageUri, ApprovalStatus approvalStatus) {
+    public ClientDTO(String owner, String businessName, String businessType, Address address, String email, String tel, String profileImageUri, ApprovalStatus approvalStatus) {
+        this.owner = owner;
+        this.businessName = businessName;
+        this.businessType = businessType;
+        this.address = address;
+        this.email = email;
+        this.tel = tel;
+        this.profileImageUri = profileImageUri;
+        this.approvalStatus = approvalStatus;
+
+    }
+
+
+    public ClientDTO(String owner, String businessName, String businessType, Address address, String businessRegistrationDocUri, String businessRegistrationNo, String email, String tel, String profileImageUri,ApprovalStatus approvalStatus) {
         this.owner = owner;
         this.businessName = businessName;
         this.businessType = businessType;
@@ -58,10 +71,8 @@ public class ClientDTO {
         this.email = email;
         this.tel = tel;
         this.profileImageUri = profileImageUri;
+
         this.approvalStatus = approvalStatus;
-
     }
-
-
 
 }

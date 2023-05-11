@@ -29,6 +29,25 @@ public class ClientController {
 
     }
 
+
+
+    @PostMapping(value ="/getclient" ,produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseUtil getEmployeeDetails(@RequestHeader(required = true) String userId,
+                                           @RequestHeader(required = true) String role) throws Exception {
+
+        if (role.equals(UserRole.CLIENT.getAuthority())) {
+            Object client = clientService.getClient(userId, role);
+            if(client instanceof String){
+                return new ResponseUtil(200,client.toString(),null);
+            } else if (client instanceof ClientDTO) {
+                return new ResponseUtil(200,"get_client_success",client);
+            }
+
+        }
+            return new ResponseUtil(400,"user role is not valid",null);
+    }
+
     @PostMapping(value = "/getAll",consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
     public void getAllDetails(){
 

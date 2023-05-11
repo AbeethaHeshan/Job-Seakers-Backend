@@ -34,10 +34,10 @@ public class EmployeeController {
 
     @PostMapping(value ="/getemployee" ,produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseUtil getEmployeeDetails(@RequestParam(value ="userId" , required = true) String userId,
-                                           @RequestParam(value = "role" , required = true) String role) throws Exception {
+    public ResponseUtil getEmployeeDetails(@RequestHeader( required = true) String userId,
+                                           @RequestHeader( required = true) String role) throws Exception {
 
-        if (role.equals(UserRole.EMPLOYEE.getAuthority()) || role.equals(UserRole.CLIENT.getAuthority()) || role.equals(UserRole.ADMIN.getAuthority())) {
+        if (role.equals(UserRole.EMPLOYEE.getAuthority())) {
                return new ResponseUtil(200,"get_user_success",employeeService.getEmployee(userId,role));
         } else {
                return new ResponseUtil(400,"user role is not valid",null);
