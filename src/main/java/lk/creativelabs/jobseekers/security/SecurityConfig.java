@@ -44,6 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login/**","/auth/token/refresh/**").permitAll();
 
+        http.authorizeRequests().antMatchers(POST,"/jobcategories/**").authenticated();
+
         http.authorizeRequests().antMatchers(POST,"/employee/getemployee/**").authenticated();
         http.authorizeRequests().antMatchers(POST,"/employee/update/**").authenticated();
         http.authorizeRequests().antMatchers(POST,"/employee/delete/**").authenticated();

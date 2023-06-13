@@ -103,8 +103,8 @@ public class CustomAuthonticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        Map<String,String> tokens = new HashMap<>();
-        tokens.put("code","401");
+        Map<String,Object> tokens = new HashMap<>();
+        tokens.put("code",401);
         tokens.put("message","not a valid user");
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(),tokens);
