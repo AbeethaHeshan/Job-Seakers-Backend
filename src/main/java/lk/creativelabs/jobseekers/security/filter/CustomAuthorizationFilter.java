@@ -26,6 +26,7 @@ import java.util.Map;
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 // uthorize part
@@ -37,7 +38,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
          if(request.getServletPath().equals("/login") || request.getServletPath().equals("/auth/token/refresh")){
              filterChain.doFilter(request,response);
          }else{
-             String authorizationHeader = request.getHeader(AUTHORIZATION);
+             String authorizationHeader = request.getHeader("Authorization");  //AUTHORIZATION
 
              System.out.println(authorizationHeader+ " "+ "  vvvvvvvvvv  " );
              if(authorizationHeader != null &&  authorizationHeader.startsWith("Bearer ")){
@@ -62,9 +63,15 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                        response.setStatus(FORBIDDEN.value());
                      //  response.sendError(FORBIDDEN.value());
 
+                         Throwable nestedException = exception;
+                         while (nestedException.getCause() != null) {
+                             nestedException = nestedException.getCause();
+                         }
+                         String nestedMessage = nestedException.getMessage();
+
                          Map<String,Object> error = new HashMap<>();
+                         error.put("message",nestedMessage);
                          error.put("code",401);
-                         error.put("error_message",exception.getMessage());
                          response.setContentType(APPLICATION_JSON_VALUE);
                          new ObjectMapper().writeValue(response.getOutputStream(),error);
 

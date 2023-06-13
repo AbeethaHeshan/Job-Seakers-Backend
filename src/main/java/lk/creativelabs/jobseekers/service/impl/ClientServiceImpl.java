@@ -102,10 +102,9 @@ public class ClientServiceImpl implements ClientService {
             System.out.println("");
             if(approvalStatus.equals(ApprovalStatus.PENDING.name())){
 
-                   return "This client not Approved ";
+                throw new Exception("This client Approval Is Pending");
             } else if (approvalStatus.equals(ApprovalStatus.REJECTED.name())) {
-
-                   return "This client not Approved ";
+                throw new Exception("Client Rejected Please Sign Up Again");
             }
             Client client = clientRepository.getClientByUserIdAndRole(userId, role);
             ClientDTO clientDTO =  new ClientDTO(client.getOwner(),client.getBusinessName(),client.getBusinessType(),client.getAddress(),client.getEmail(),client.getTel(),client.getProfileImageUri(),client.getApprovalStatus());
