@@ -89,24 +89,31 @@ public class CustomAuthonticationFilter extends UsernamePasswordAuthenticationFi
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
-        Map<String,Object> tokens = new HashMap<>();
-            tokens.put("code",200);
-            tokens.put("userId",user.getUserId());
-            tokens.put("userRole",user.getRole());
-            tokens.put("access_token",access_token);
-            tokens.put("refresh_token",refresh_token);
+        Map<String, Object> res = new HashMap<>();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("userId", user.getUserId());
+        data.put("userRole", user.getRole());
+        data.put("access_token",access_token);
+        data.put("refresh_token", refresh_token);
+
+        res.put("code", 200);
+        res.put("data", data);
 
         response.setContentType(APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(),tokens);
+        new ObjectMapper().writeValue(response.getOutputStream(),res);
 
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        Map<String,Object> tokens = new HashMap<>();
-        tokens.put("code",401);
-        tokens.put("message","not a valid user");
+        Map<String, Object> res = new HashMap<>();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("message", "not a valid user");
+        res.put("code", 401);
+        res.put("data", data);
         response.setContentType(APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(),tokens);
+        new ObjectMapper().writeValue(response.getOutputStream(),res);
     }
 }

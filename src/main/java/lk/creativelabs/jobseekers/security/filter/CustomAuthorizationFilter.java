@@ -69,11 +69,17 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                          }
                          String nestedMessage = nestedException.getMessage();
 
-                         Map<String,Object> error = new HashMap<>();
-                         error.put("message",nestedMessage);
-                         error.put("code",401);
+
+                         Map<String, Object> res = new HashMap<>();
+
+                         Map<String, Object> data = new HashMap<>();
+                         data.put("message", nestedMessage);
+
+                         res.put("code", 401);
+                         res.put("data", data);
+
                          response.setContentType(APPLICATION_JSON_VALUE);
-                         new ObjectMapper().writeValue(response.getOutputStream(),error);
+                         new ObjectMapper().writeValue(response.getOutputStream(),res);
 
                  }
              }else{
