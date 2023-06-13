@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST,"/employee/update/**").authenticated();
         http.authorizeRequests().antMatchers(POST,"/employee/delete/**").authenticated();
 
-        http.authorizeRequests().antMatchers(POST,"/client/getclient/**").authenticated();
+        http.authorizeRequests().antMatchers(GET,"/client/getclient/**").authenticated();
         http.authorizeRequests().antMatchers(POST,"/client/update/**").authenticated();
         http.authorizeRequests().antMatchers(POST,"/client/delete/**").authenticated();
 

@@ -30,7 +30,7 @@ public class ClientController {
 
     }
 
-    @PostMapping(value ="/getclient" ,produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping (value ="/getclient" ,produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseUtil getEmployeeDetails(@RequestHeader(required = true) String userId,
                                            @RequestHeader(required = true) String role) throws Exception {

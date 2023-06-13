@@ -32,7 +32,7 @@ public class EmployeeController {
         }
     }
 
-    @PostMapping(value ="/getemployee" ,produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping (value ="/getemployee" ,produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseUtil getEmployeeDetails(@RequestHeader( required = true) String userId,
                                            @RequestHeader( required = true) String role) throws Exception {
