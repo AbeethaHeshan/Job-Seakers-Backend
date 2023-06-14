@@ -38,7 +38,7 @@ public class AuthController {
 
       @PostMapping("/token/refresh")
       public void getRefreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-          String authorizationHeader = request.getHeader(AUTHORIZATION);
+          String authorizationHeader = request.getHeader("Authorization");
           if(authorizationHeader != null &&  authorizationHeader.startsWith("Bearer ")) {
               try {
                   String token = authorizationHeader.substring("Bearer ".length());
@@ -62,12 +62,20 @@ public class AuthController {
                           .withIssuer(request.getRequestURL().toString())
                           .sign(algorithm);
 
-                  Map<String,String> tokens = new HashMap<>();
-                  tokens.put("access_token",access_token);
-                  tokens.put("refresh_token",refresh_token);
+
+
+
+                  Map<String, Object> res = new HashMap<>();
+
+                  Map<String, Object> data = new HashMap<>();
+                  data.put("access_token",access_token);
+                  data.put("refresh_token",refresh_token);
+
+                  res.put("code", 200);
+                  res.put("data", data);
 
                   response.setContentType(APPLICATION_JSON_VALUE);
-                  new ObjectMapper().writeValue(response.getOutputStream(),tokens);
+                  new ObjectMapper().writeValue(response.getOutputStream(),res);
 
 
               } catch (Exception exception) {
@@ -76,13 +84,16 @@ public class AuthController {
                   response.setStatus(FORBIDDEN.value());
                   //  response.sendError(FORBIDDEN.value());
 
-                  Map<String, String> error = new HashMap<>();
-                  error.put("code","401");
-                  error.put("error_message", exception.getMessage());
-                  response.setContentType(APPLICATION_JSON_VALUE);
-                  new ObjectMapper().writeValue(response.getOutputStream(), error);
+                  Map<String, Object> res = new HashMap<>();
 
-                  System.out.println("CCCCCCCCCCCC");
+                  Map<String, Object> data = new HashMap<>();
+                  data.put("message", exception.getMessage());
+                  res.put("code", 401);
+                  res.put("data", data);
+
+                  response.setContentType(APPLICATION_JSON_VALUE);
+                  new ObjectMapper().writeValue(response.getOutputStream(),res);
+
               }
           }else {
               throw new RuntimeException("Refresh token is missing");
