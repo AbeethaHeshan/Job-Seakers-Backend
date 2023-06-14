@@ -11,10 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +33,7 @@ public class AuthController {
         @Autowired
         UserCredentialService userCredentialService;
 
-      @PostMapping("/token/refresh")
+      @GetMapping("/token/refresh")
       public void getRefreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
           String authorizationHeader = request.getHeader("Authorization");
           if(authorizationHeader != null &&  authorizationHeader.startsWith("Bearer ")) {
