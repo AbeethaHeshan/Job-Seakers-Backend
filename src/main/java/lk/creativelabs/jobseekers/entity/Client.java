@@ -40,9 +40,12 @@ public class Client {
     @Enumerated(EnumType.STRING)
     private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employeeId")
-    Employee employee;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "employeeId")
+//    Employee employee;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private Set<Employee> epm = new HashSet<>();
 
     @ManyToMany(mappedBy = "clientset")
     private Set<Employee> employees = new HashSet<>();
@@ -70,4 +73,11 @@ public class Client {
          this.profileImageUri = profileImageUri;
          this.userId = userid;
     }
+
+
+
+    public Client(long clientId) {
+        this.clientId = clientId;
+    }
+
 }

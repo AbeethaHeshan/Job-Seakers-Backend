@@ -8,4 +8,8 @@ public interface JobCatogaryService {
 
      JobCategoryDTO createNewCatogary(JobCategoryDTO jobCategoryDetails);
      ArrayList<String> getAll();
+
+     ArrayList<String> getAllRoleTypes();
+
+     ArrayList<String> getAllRoleTypesByCatogary(String catogary) throws Exception;
 }

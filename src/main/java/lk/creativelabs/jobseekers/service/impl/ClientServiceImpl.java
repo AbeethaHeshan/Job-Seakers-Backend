@@ -8,6 +8,7 @@ import lk.creativelabs.jobseekers.entity.Employee;
 import lk.creativelabs.jobseekers.entity.UserCredentials;
 import lk.creativelabs.jobseekers.entity.enums.ApprovalStatus;
 import lk.creativelabs.jobseekers.repo.ClientRepo;
+import lk.creativelabs.jobseekers.repo.EmployeeRepo;
 import lk.creativelabs.jobseekers.repo.UserCredentialsRepo;
 import lk.creativelabs.jobseekers.service.ClientService;
 import lk.creativelabs.jobseekers.util.UserIdGenerator;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,6 +29,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     ClientRepo clientRepository;
+
+    @Autowired
+    EmployeeRepo employeeRepo;
 
     @Autowired
     UserCredentialsRepo authRepo;
@@ -114,4 +119,49 @@ public class ClientServiceImpl implements ClientService {
         }
 
     }
+
+    //only access client
+    @Override
+    public ArrayList<EmployeeDTO> getAllEmployeesByClientUserId(String userId) throws Exception {
+        try{
+            long clientId = clientRepository.findClientIdByUserId(userId);
+            List<Employee> employees = employeeRepo.getEmployeeByClientId(clientId);
+
+            ArrayList<EmployeeDTO> employeeDTOs = new ArrayList<>();
+
+            for (Employee employee : employees) {
+                EmployeeDTO employeeDTO = new EmployeeDTO();
+                employeeDTO.setName(employee.getName());
+                employeeDTO.setTel(employee.getTel());
+                employeeDTO.setAddress(employee.getAddress());
+                employeeDTO.setEmail(employee.getEmail());
+                employeeDTO.setWorkingType(employee.getWorkingType());
+                employeeDTO.setDateOfBirth(employee.getDateOfBirth());
+                employeeDTO.setJobType(employee.getJobType());
+
+                // Set other fields accordingly
+                employeeDTOs.add(employeeDTO);
+            }
+
+            return employeeDTOs;
+
+        }catch (Exception e){
+            throw new Exception(e);
+        }
+    }
+
+    // only access client
+    @Override
+    public ArrayList<String> getFilteredAllJobTypes(String userId) throws Exception {
+        try{
+
+            long clientId = clientRepository.findClientIdByUserId(userId);
+            List<String> joblist = employeeRepo.getFilterJobTypes(clientId);
+            return new ArrayList<>(joblist);
+
+        }catch (Exception e){
+            throw new Exception(e);
+        }
+    }
+
 }

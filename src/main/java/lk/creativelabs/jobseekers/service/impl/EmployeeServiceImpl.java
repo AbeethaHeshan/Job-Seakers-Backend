@@ -6,6 +6,7 @@ import lk.creativelabs.jobseekers.dto.UserCredentialsDTO;
 import lk.creativelabs.jobseekers.entity.Client;
 import lk.creativelabs.jobseekers.entity.Employee;
 import lk.creativelabs.jobseekers.entity.UserCredentials;
+import lk.creativelabs.jobseekers.repo.ClientRepo;
 import lk.creativelabs.jobseekers.repo.EmployeeRepo;
 import lk.creativelabs.jobseekers.repo.UserCredentialsRepo;
 import lk.creativelabs.jobseekers.service.EmployeeService;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -28,11 +30,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     EmployeeRepo employeeRepo;
 
     @Autowired
+    ClientRepo clientRepo;
+
+    @Autowired
     ModelMapper mapper;
 
     @Autowired
     UserCredentialsRepo authRepo;
-
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -45,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setUserId(userId);
             employeeRepo.save(employee);
             authRepo.save(new UserCredentials(employeeDetails.getUserName(), passwordEncoder.encode(employeeDetails.getPassword()),userId,employeeDetails.getRole()));
-           return new EmployeeDTO(employeeDetails.getName(),employeeDetails.getAddress(),employeeDetails.getDateOfBirth(),employeeDetails.getEmail(),employeeDetails.getTel(),employeeDetails.getProfileImageUri(),employeeDetails.getWorkingType(),employeeDetails.getJobType())  ;
+           return new EmployeeDTO(employeeDetails.getName(),employeeDetails.getAddress(),employeeDetails.getDateOfBirth(),employeeDetails.getEmail(),employeeDetails.getTel(),employeeDetails.getProfileImageUri(),employeeDetails.getWorkingType(),employeeDetails.getJobType(),employeeDetails.getJobRoleType())  ;
 
         }catch (Error error){
           return null;
@@ -67,7 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.setWorkingType(employeeDetails.getWorkingType());
                 employee.setJobType(employeeDetails.getJobType());
                 employee.setProfileImageUri(employeeDetails.getProfileImageUri());
-
+                employee.setJobRoleType(employeeDetails.getJobRoleType());
                 Employee res = employeeRepo.save(employee);
                return   new EmployeeDTO(res.getName(),res.getAddress(),res.getDateOfBirth(),res.getEmail(),res.getTel(),res.getProfileImageUri(),res.getWorkingType(),res.getJobType());
 
@@ -99,11 +103,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO getEmployee(String userId,String role) throws Exception {
         try{
             Employee employee = employeeRepo.getEmployeeByUserIdAndRole(userId, role);
-            EmployeeDTO employeeDTO =  new EmployeeDTO(employee.getName(),employee.getAddress(),employee.getDateOfBirth(),employee.getEmail(),employee.getTel(),employee.getProfileImageUri(),employee.getWorkingType(),employee.getJobType());
-            return employeeDTO;
+            return new EmployeeDTO(employee.getName(),employee.getAddress(),employee.getDateOfBirth(),employee.getEmail(),employee.getTel(),employee.getProfileImageUri(),employee.getWorkingType(),employee.getJobType(),employee.getJobRoleType());
         }catch (Exception exception){
             throw new Exception(exception);
         }
 
     }
+
+
+
+
 }

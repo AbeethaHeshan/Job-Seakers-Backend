@@ -22,4 +22,7 @@ public class JobCategory {
     @OneToMany(mappedBy = "jobCategory", cascade = CascadeType.ALL)
     private Set<Advertisement> advertisements = new HashSet<>();
 
+    public JobCategory(long catogaryId) {
+        this.categoryId = catogaryId;
+    }
 }

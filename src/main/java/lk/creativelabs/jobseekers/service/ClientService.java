@@ -15,4 +15,8 @@ public interface ClientService {
     ArrayList<EmployeeDTO> getAllClients();
     Object getClient(String userId, String role) throws Exception;
 
+
+    ArrayList<EmployeeDTO> getAllEmployeesByClientUserId(String userId) throws Exception;
+
+    ArrayList<String> getFilteredAllJobTypes(String userId) throws Exception;
 }

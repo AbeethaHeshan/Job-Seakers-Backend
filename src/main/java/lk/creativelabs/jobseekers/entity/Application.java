@@ -22,6 +22,8 @@ public class Application {
     String workingType;
     String cvUri;
     String additionalQualifications;
+    String userId;
+    String jobCatogary;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employeeId")

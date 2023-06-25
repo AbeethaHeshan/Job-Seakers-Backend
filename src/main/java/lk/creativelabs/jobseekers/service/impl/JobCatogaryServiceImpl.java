@@ -31,5 +31,23 @@ public class JobCatogaryServiceImpl implements JobCatogaryService {
         return new ArrayList<>(jobCategoryRepo.findAllJobTypes());
     }
 
+    @Override
+    public ArrayList<String> getAllRoleTypes() {
+        return new ArrayList<>(jobCategoryRepo.findAllServiceTypes());
+    }
+
+    @Override
+    public ArrayList<String> getAllRoleTypesByCatogary(String catogary) throws Exception {
+        System.out.println(catogary);
+        try{
+            List<String> allServiceTypesByJobType = jobCategoryRepo.findAllServiceTypesByJobType(catogary);
+            return new ArrayList<>(allServiceTypesByJobType);
+
+        }
+         catch (Exception e){
+             System.out.println(e.getMessage());
+             throw new Exception(e);
+         }
+    }
 
 }

@@ -31,6 +31,7 @@ public class Employee {
     private String jobType;
     private String userId;
     private String role;
+    private String jobRoleType;
 
 
     public Employee(String name, Address address, LocalDate dateOfBirth, String email, String tel, String profileImageUri, String workingType, String jobType, String userId, String role) {
@@ -47,8 +48,12 @@ public class Employee {
     }
 
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private Set<Client> clients = new HashSet<>();
+//    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+//    private Set<Client> clients = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_Id")
+    Client client;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private Set<Application> applications = new HashSet<>();

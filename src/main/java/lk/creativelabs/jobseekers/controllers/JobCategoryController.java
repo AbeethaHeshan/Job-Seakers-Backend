@@ -35,4 +35,15 @@ public class JobCategoryController {
               return new ResponseUtil(200,"save success",jobCatogaryService.getAll());
             }
 
+        @GetMapping(value = "/getAll/job/type/roles",produces = {MediaType.APPLICATION_JSON_VALUE})
+        public ResponseUtil getAllRoles(){
+          return new ResponseUtil(200,"save success",jobCatogaryService.getAllRoleTypes());
+        }
+
+        @PostMapping(value = "/getAll/job/type/roles/catagory",produces = {MediaType.APPLICATION_JSON_VALUE})
+        public ResponseUtil getAllJobRoleTypeByCategary(@RequestParam(value = "catogary") String catogary) throws Exception {
+            System.out.println(catogary);
+          return new ResponseUtil(200,"save success",jobCatogaryService.getAllRoleTypesByCatogary(catogary));
+        }
+
 }

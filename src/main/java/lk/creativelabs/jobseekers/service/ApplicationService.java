@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface ApplicationService {
 
-        boolean createNewApplication();
+    boolean createNewApplication();
     ArrayList<ApplicationDTO> getAllOfEachClient(String clientId);
     ApprovalDTO updateApprovalStatus(String status);
     ApprovalDTO getApprovalStatusOfEmployee(String employeeId);

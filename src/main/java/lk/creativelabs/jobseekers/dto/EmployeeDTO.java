@@ -25,6 +25,7 @@ public class EmployeeDTO {
     private String password;
     private String jobType;
     private String userId;
+    private String jobRoleType;  // waiter , cook , manager
     private String role; // admin , client , employee
 
     public EmployeeDTO(String name, Address address, LocalDate dateOfBirth, String email, String tel, String profileImageUri, String workingType, String userName, String password, String jobType) {

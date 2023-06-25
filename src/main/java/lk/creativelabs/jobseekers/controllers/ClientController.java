@@ -2,6 +2,7 @@ package lk.creativelabs.jobseekers.controllers;
 import lk.creativelabs.jobseekers.dto.ClientDTO;
 import lk.creativelabs.jobseekers.dto.EmployeeDTO;
 import lk.creativelabs.jobseekers.service.ClientService;
+import lk.creativelabs.jobseekers.service.EmployeeService;
 import lk.creativelabs.jobseekers.util.ResponseUtil;
 import lk.creativelabs.jobseekers.util.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class ClientController {
 
     @Autowired
     ClientService clientService;
+
+    @Autowired
+    EmployeeService employeeService;
 
     @PostMapping(value = "/createNew",consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
@@ -34,7 +38,7 @@ public class ClientController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseUtil getEmployeeDetails(@RequestHeader(required = true) String userId,
                                            @RequestHeader(required = true) String role) throws Exception {
-
+        System.out.println(userId + " " + role);
         if (role.equals(UserRole.CLIENT.getAuthority())) {
             Object client = clientService.getClient(userId, role);
             if(client instanceof String){
@@ -63,6 +67,32 @@ public class ClientController {
 
 
     //send message to the client
+
+    @GetMapping (value ="/get/employees/by/clientId" ,produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseUtil getEmployeeDetailsForEachClient(@RequestHeader( required = true) String userId,
+                                                        @RequestHeader( required = true) String role) throws Exception {
+        if (role.equals(UserRole.EMPLOYEE.getAuthority())) {
+            return new ResponseUtil(200,"get_user_success",clientService.getAllEmployeesByClientUserId(userId));
+        } else {
+            return new ResponseUtil(400,"user role is not valid",null);
+        }
+
+    }
+
+
+    @GetMapping (value ="/get/employee/jobTypes" ,produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseUtil getAllJobsTypes(@RequestHeader( required = true) String userId,
+                                                        @RequestHeader( required = true) String role) throws Exception {
+        if (role.equals(UserRole.EMPLOYEE.getAuthority())) {
+            return new ResponseUtil(200,"get_user_success",clientService.getFilteredAllJobTypes(userId));
+        } else {
+            return new ResponseUtil(400,"user role is not valid",null);
+        }
+    }
+
+
 
 
 }

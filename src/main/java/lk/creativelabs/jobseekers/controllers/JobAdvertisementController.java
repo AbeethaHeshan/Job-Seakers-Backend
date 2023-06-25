@@ -1,18 +1,25 @@
 package lk.creativelabs.jobseekers.controllers;
 
+import lk.creativelabs.jobseekers.dto.AdvertiesmentDTO;
+import lk.creativelabs.jobseekers.service.AdvertiesmentService;
+import lk.creativelabs.jobseekers.util.ResponseUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("advertisement")
+@CrossOrigin
 public class JobAdvertisementController {
+     @Autowired
+     AdvertiesmentService advertiesmentService;
 
            @PostMapping(value = "/createNew",consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
-           public void createAdvertisement(){
+           public ResponseUtil createAdvertisement(@RequestBody AdvertiesmentDTO advertiesmentDTO,@RequestHeader String userId) throws Exception {
 
+                 System.out.println(advertiesmentDTO + " dddd " + userId);
+
+              return  new ResponseUtil(200,"save Success",advertiesmentService.createNewAdvertiesment(advertiesmentDTO,userId));
            }
 
            @PostMapping(value = "/update",consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -25,14 +32,15 @@ public class JobAdvertisementController {
 
            }
 
-           @PostMapping(value = "/getAll/byClientId",consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
-           public void getAllAdvertisementsForUniqueClient(){
-
+           @GetMapping (value = "/getAll/byClientId",produces = {MediaType.APPLICATION_JSON_VALUE})
+           public ResponseUtil getAllAdvertisementsForUniqueClient(@RequestHeader String userId){
+               return  new ResponseUtil(200,"get by client",advertiesmentService.getAllAdvertiesmentsByClientId(userId));
            }
 
            @GetMapping(value = "/getAll",produces = {MediaType.APPLICATION_JSON_VALUE})
-           public void getAllAdvertisements(){
-
+           public ResponseUtil getAllAdvertisements(){
+                 System.out.println("ddddddddddddd");
+                 return new ResponseUtil(200,"get succes",advertiesmentService.getAllAdvertiesments());
            }
 
            @PostMapping(value = "/getAll/byCategoryId",consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})

@@ -22,8 +22,10 @@ public class Advertisement {
      double hourlyRate;
      String experienceLevel;
      String clarification;
+     String jobType;
      String description;
      LocalDate startDate;
+     LocalDate endDate;
 
      @ManyToOne(fetch = FetchType.LAZY)
      @JoinColumn(name = "categoryId")

@@ -10,6 +10,7 @@ public class ApplicationStatusImpl implements ApplicationService {
 
     @Override
     public boolean createNewApplication() {
+
         return false;
     }
 
