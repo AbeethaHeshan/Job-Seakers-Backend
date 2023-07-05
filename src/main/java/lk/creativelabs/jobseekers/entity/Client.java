@@ -35,10 +35,9 @@ public class Client {
     private String role;
 
 
-
     @Column(name = "approval_status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
+    private ApprovalStatus approvalStatus = ApprovalStatus.APPROVED;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "employeeId")
@@ -73,7 +72,6 @@ public class Client {
          this.profileImageUri = profileImageUri;
          this.userId = userid;
     }
-
 
 
     public Client(long clientId) {

@@ -16,9 +16,6 @@ public class JobAdvertisementController {
 
            @PostMapping(value = "/createNew",consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
            public ResponseUtil createAdvertisement(@RequestBody AdvertiesmentDTO advertiesmentDTO,@RequestHeader String userId) throws Exception {
-
-                 System.out.println(advertiesmentDTO + " dddd " + userId);
-
               return  new ResponseUtil(200,"save Success",advertiesmentService.createNewAdvertiesment(advertiesmentDTO,userId));
            }
 
@@ -39,7 +36,6 @@ public class JobAdvertisementController {
 
            @GetMapping(value = "/getAll",produces = {MediaType.APPLICATION_JSON_VALUE})
            public ResponseUtil getAllAdvertisements(){
-                 System.out.println("ddddddddddddd");
                  return new ResponseUtil(200,"get succes",advertiesmentService.getAllAdvertiesments());
            }
 
