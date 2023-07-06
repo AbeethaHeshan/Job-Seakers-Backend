@@ -20,10 +20,12 @@ public interface ClientRepo extends JpaRepository<Client,String> {
        @Query("SELECT c.approvalStatus FROM Client  c WHERE c.userId = :userId")
        String findApprovalStatusByUserId(String userId);
 
-
        Optional<Client> getClientByUserId(String userId);
 
        @Query("SELECT c.clientId FROM Client  c WHERE c.userId = :userId")
        long findClientIdByUserId(String userId);
+
+
+
 
 }

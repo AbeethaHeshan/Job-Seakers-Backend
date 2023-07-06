@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Entity
 public class Application {
     @Id
-    String applicationId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    long applicationId;
     String name;
     String address;
     String dateOfBirth;
@@ -35,7 +36,6 @@ public class Application {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "clienyId")
     Client client;
-
 
 
 }

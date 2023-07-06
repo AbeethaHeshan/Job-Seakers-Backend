@@ -27,4 +27,7 @@ public interface EmployeeRepo extends JpaRepository<Employee,String> {
       @Query("SELECT DISTINCT e.jobType FROM Employee e WHERE e.client.clientId = :clientId")
       List<String>  getFilterJobTypes(long clientId);
 
+
+
+
 }

@@ -18,6 +18,7 @@ import java.time.LocalDate;
 public class ClientPayments {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private long id;
 
     @Column(name = "date")

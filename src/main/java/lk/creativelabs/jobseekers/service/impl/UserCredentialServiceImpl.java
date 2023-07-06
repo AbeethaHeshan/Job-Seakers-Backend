@@ -28,7 +28,6 @@ public class UserCredentialServiceImpl implements UserCredentialService , UserDe
       @Autowired
       ModelMapper mapper;
 
-
       @Override
       public UserCredentialsDTO getUserDetails(String username , String password) {
 

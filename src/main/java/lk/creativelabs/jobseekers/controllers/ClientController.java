@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lk.creativelabs.jobseekers.dto.ClientDTO;
 import lk.creativelabs.jobseekers.dto.EmployeeDTO;
+import lk.creativelabs.jobseekers.entity.enums.ApprovalStatus;
 import lk.creativelabs.jobseekers.service.ClientService;
 import lk.creativelabs.jobseekers.service.EmployeeService;
 import lk.creativelabs.jobseekers.util.FileServer;
@@ -56,6 +57,7 @@ public class ClientController {
             clientDto.setRole(UserRole.CLIENT.getAuthority());
             clientDto.setProfileImageUri(profilePath);
             clientDto.setBusinessRegistrationDocUri(businessDocPath);
+            clientDto.setApprovalStatus(ApprovalStatus.APPROVED);
 
             System.out.println(clientDto);
             return new ResponseUtil(200, "save_success", clientService.createNewClient(clientDto));

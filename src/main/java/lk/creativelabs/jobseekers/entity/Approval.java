@@ -13,7 +13,8 @@ import javax.persistence.*;
 @Entity
 public class Approval {
     @Id
-    String approvalId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    long approvalId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "approvalStatus", columnDefinition = "varchar(30) default 'PENDING'")
